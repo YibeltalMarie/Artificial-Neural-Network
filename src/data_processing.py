@@ -1,13 +1,11 @@
 
-# data_preprocessing.py
-
 import pandas as pd
 import numpy as np
 
 
 def load_data(file_path):
     """
-    Load dataset and drop unnecessary columns
+    Load dataset and remove unused columns
     """
     df = pd.read_csv(file_path)
 
@@ -18,8 +16,8 @@ def load_data(file_path):
 
 def split_data(df):
     """
-    Shuffle and split dataset into
-    train (60%), validation (20%), test (20%)
+    Shuffle dataset and split into
+    60% train, 20% validation, 20% test
     """
 
     train, valid, test = np.split(
@@ -28,3 +26,13 @@ def split_data(df):
     )
 
     return train, valid, test
+
+
+def split_features_target(dataframe):
+    """
+    Separate features and target
+    """
+    X = dataframe[dataframe.columns[:-1]].values
+    y = dataframe[dataframe.columns[-1]].values
+
+    return X, y
