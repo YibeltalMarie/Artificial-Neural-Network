@@ -20,10 +20,14 @@ def split_data(df):
     60% train, 20% validation, 20% test
     """
 
-    train, valid, test = np.split(
-        df.sample(frac=1, random_state=42),
-        [int(0.6 * len(df)), int(0.8 * len(df))]
-    )
+    df = df.sample(frac=1, random_state=42)
+
+    train_end = int(0.6 * len(df))
+    valid_end = int(0.8 * len(df))
+
+    train = df[:train_end]
+    valid = df[train_end:valid_end]
+    test = df[valid_end:]
 
     return train, valid, test
 
