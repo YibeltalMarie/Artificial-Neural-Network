@@ -6,9 +6,9 @@ class RegressionANN(nn.Module):
     super(RegressionANN,self).__init__()
 
     #Hidden Layers (fully connected)
-    self.hidden1 = nn.Linear(input_dim, 64)
-    self.hidden2 = nn.Linear(64, 32)
-    self.hidden3 = nn.Linear(32, 16)
+    self.hidden1 = nn.Linear(input_dim, 16)
+    self.hidden2 = nn.Linear(16, 16)
+    self.hidden3 = nn.Linear(16, 16)
 
     #Output Layer
     self.output = nn.Linear(16, 1)
