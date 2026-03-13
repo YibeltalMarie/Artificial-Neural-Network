@@ -1,6 +1,6 @@
 
 import pandas as pd
-from src.data_processing import split_data, split_features_target
+from src.data_preprocessing import split_data, split_features_target
 from src.data_utils import fit_scaler, transform_dataset, to_tensor
 from src.model import RegressionANN
 from src.train import train_model
@@ -22,8 +22,19 @@ X_valid, y_valid = split_features_target(valid_df)
 X_test, y_test = split_features_target(test_df)
 
 
+y_train = y_train.reshape(-1, 1)
+y_valid = y_valid.reshape(-1, 1)
+y_test = y_test.reshape(-1, 1)
+
+
 # Fit scaler on training data and transform all sets
 scaler = fit_scaler(X_train)
+y_scaler = fit_scaler(y_train)
+
+y_train = transform_dataset(y_train, y_scaler)
+y_valid = transform_dataset(y_valid, y_scaler)
+y_test = transform_dataset(y_test, y_scaler)
+
 X_train = transform_dataset(X_train, scaler)
 X_valid = transform_dataset(X_valid, scaler)
 X_test = transform_dataset(X_test, scaler)

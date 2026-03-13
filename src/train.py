@@ -9,7 +9,7 @@ def train_model(model, x_train, y_train, x_valid, y_valid):
     loss_fn = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-    epochs = 200
+    epochs = 500
 
     train_losses = []
     valid_losses = []

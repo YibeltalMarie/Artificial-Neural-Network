@@ -40,3 +40,4 @@ def split_features_target(dataframe):
     y = dataframe[dataframe.columns[-1]].values
 
     return X, y
+    
