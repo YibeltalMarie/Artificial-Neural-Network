@@ -26,7 +26,7 @@ def evaluate_model(model, x_test, y_test):
         mae = torch.mean(torch.abs(predictions - y_test)).item()
         # MAPE 
         epsilon = 1e-7  # to avoid division by zero
-        mape = torch.mean(torch.abs((y_test - predictions) / (y_test + epsilon))).item() * 100
+        mape = torch.mean(torch.abs((y_test - predictions) / (y_test + epsilon))).item()
     
 
 
