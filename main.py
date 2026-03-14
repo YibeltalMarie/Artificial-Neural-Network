@@ -1,6 +1,6 @@
 
 import pandas as pd
-from src.data_preprocessing import split_data, split_features_target
+from src.data_preprocessing import show_correlation_matrix, load_data, drop_features, split_data, split_features_target
 from src.data_utils import fit_scaler, transform_dataset, to_tensor
 from src.model import RegressionANN
 from src.train import train_model
@@ -8,10 +8,9 @@ from src.evaluate import evaluate_model
 import torch
 
 # Load data
-df = pd.read_csv('./data/hour.csv')
-
-# Drop unnecessary columns
-df = df.drop(['instant', 'dteday', 'casual', 'registered'], axis=1)
+df = load_data('./data/hour.csv')
+show_correlation_matrix(df)
+df = drop_features(df)
 
 # Split into train, validation, test
 train_df, valid_df, test_df = split_data(df)
@@ -31,10 +30,12 @@ y_test = y_test.reshape(-1, 1)
 scaler = fit_scaler(X_train)
 y_scaler = fit_scaler(y_train)
 
+# Transform all targets/Labels
 y_train = transform_dataset(y_train, y_scaler)
 y_valid = transform_dataset(y_valid, y_scaler)
 y_test = transform_dataset(y_test, y_scaler)
 
+# Transform all features
 X_train = transform_dataset(X_train, scaler)
 X_valid = transform_dataset(X_valid, scaler)
 X_test = transform_dataset(X_test, scaler)
