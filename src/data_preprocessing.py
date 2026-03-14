@@ -4,20 +4,19 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+def get_base_path():
+    root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    results_dir = os.path.join(root_path, "results")
 
+    return results_dir
 
-def show_correlation_matrix(df):
+def show_correlation_matrix(df, results_dir):
     df = df.drop(['dteday'], axis=1)
     corr = df.corr()
 
     plt.figure(figsize=(14,10))
     sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f")
     plt.title("Correlation Matrix of Bike Sharing Dataset")
-    # Get project root directory
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-    results_dir = os.path.join(base_dir, "results")
-
     os.makedirs(results_dir, exist_ok=True)
     save_path = os.path.join(results_dir, "correlation_matrix.png")
     plt.savefig(save_path)

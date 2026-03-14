@@ -1,15 +1,16 @@
 
 import pandas as pd
-from src.data_preprocessing import show_correlation_matrix, load_data, drop_features, split_data, split_features_target
+from src.data_preprocessing import get_base_path, show_correlation_matrix, load_data, drop_features, split_data, split_features_target
 from src.data_utils import fit_scaler, transform_dataset, to_tensor
 from src.model import RegressionANN
 from src.train import train_model
-from src.evaluate import evaluate_model
+from src.evaluate import evaluate_model, plot_metrics
 import torch
 
 # Load data
 df = load_data('./data/hour.csv')
-show_correlation_matrix(df)
+results_dir = get_base_path()
+show_correlation_matrix(df, results_dir)
 df = drop_features(df)
 
 # Split into train, validation, test
@@ -53,8 +54,8 @@ model = RegressionANN(input_dim)
 train_losses, valid_losses = train_model(model, X_train, y_train, X_valid, y_valid)
 
 # Evaluate on test data
-evaluate_model(model, X_test, y_test)
-
+mse, rmse, mae, mape = evaluate_model(model, X_test, y_test)
+plot_metrics(mse, rmse, mae, mape, results_dir)
 # Optional: Plot losses
 import matplotlib.pyplot as plt
 
